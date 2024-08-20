@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Watch Later Extractor
 // @namespace    rbits.watch-later-extractor
-// @version      0.0.1
+// @version      0.0.2
 // @description  Exports videos from your YouTube Watch Later page to a JSON file
 // @author       rbits
 // @match        https://www.youtube.com/playlist*
