@@ -44,6 +44,16 @@ function runScript() {
         width: 80%;
     `
     box.appendChild(videoIdInput);
+
+    let fileType = document.createElement("select");
+    fileType.innerHTML = `
+        <option value="json">JSON</option>
+        <option value="csv">CSV</option>
+    `;
+    fileType.style = `
+        font-size: 2rem;
+    `
+    box.appendChild(fileType);
     
     let button = document.createElement("button");
     button.textContent = "Start";
@@ -69,13 +79,12 @@ function runScript() {
     
 
     button.onclick = () => {
-        startProcessing(videoIdInput.value);
+        startProcessing(videoIdInput.value, fileType.value);
         document.body.removeChild(flex);
     };
 }
 
-
-function startProcessing(stopVideoId) {
+function startProcessing(stopVideoId, fileType) {
     // Convert url to id
     const videoIdMatch = stopVideoId.match(/\/watch\?v=([^&]*)/);
     if (videoIdMatch) {
@@ -88,7 +97,7 @@ function startProcessing(stopVideoId) {
     }
 
     parseVideos(videosElement, stopVideoId, signals)
-        .then(handleParsedVideos);
+        .then((parsedVideos) => handleParsedVideos(parsedVideos, fileType));
 
 
     repeatScroll(videosElement, signals);
@@ -160,11 +169,11 @@ function parseVideo(videoElement) {
     const channelName = channelElement.textContent;
 
     return {
-        videoId,
-        // thumbnail,
         title,
         channelName,
+        videoId,
         channelUrl,
+        // thumbnail,
     };
 }
 
@@ -213,15 +222,22 @@ function isEnd(videos) {
 }
 
 
-function handleParsedVideos(parsedVideos) {
+function handleParsedVideos(parsedVideos, fileType) {
     console.log("All videos parsed, creating file");
     
-    const jsonString = JSON.stringify(parsedVideos);
-    const base64String = stringToBase64(jsonString);
+    let fileString = "";
+
+    if (fileType === "json") {
+        fileString = JSON.stringify(parsedVideos);
+    } else if (fileType === "csv") {
+        fileString = objListToCsv(parsedVideos);
+    }
+
+    const base64String = stringToBase64(fileString);
 
     var downloadLink = document.createElement("a");
     downloadLink.href = "data:text/plain;base64," + base64String;
-    downloadLink.download = "playlist.json";
+    downloadLink.download = "playlist." + fileType;
     downloadLink.click();
     
     // console.dir(parsedVideos);
@@ -235,6 +251,34 @@ function stringToBase64(string) {
         String.fromCodePoint(byte),
     ).join("");
     return btoa(binString);
+}
+
+
+function objListToCsv(objList) {
+    const columns = Object.keys(objList[0]);
+    let rows = [];
+
+    for (const obj of objList) {
+        let row = "";
+        let first = true;
+
+        for (const column of columns) {
+            if (first) {
+                first = false;
+            } else {
+                row += ",";
+            }
+
+            // Surround in quotes and escape quotes
+            row += "\"" + obj[column].replaceAll("\"", "\"\"") + "\"";
+        }
+        
+        rows.push(row);
+    }
+
+    let csv = columns.join(",") + "\n";
+    csv += rows.join("\n");
+    return csv;
 }
 
 
