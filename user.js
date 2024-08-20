@@ -160,7 +160,8 @@ function parseVideo(videoElement) {
     // const thumbnail = videoElement.getElementsByTagName("img")[0].src;
 
     const titleElement = videoElement.querySelector("#video-title");
-    const videoId = titleElement.href.match(/\/watch\?v=([^&]*)/)[1];
+    const videoUrl = titleElement.href;
+    const videoId = videoUrl.match(/\/watch\?v=([^&]*)/)[1];
     const title = titleElement.title;
     
     const channelElement = videoElement.querySelector("#channel-name")
@@ -171,6 +172,7 @@ function parseVideo(videoElement) {
     return {
         title,
         channelName,
+        videoUrl,
         videoId,
         channelUrl,
         // thumbnail,
