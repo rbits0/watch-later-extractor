@@ -7,7 +7,7 @@
 // @match        https://www.youtube.com/playlist*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        GM_registerMenuCommand
-// @license      GNU GPLv3
+// @license      GPL3
 // ==/UserScript==
 
 
