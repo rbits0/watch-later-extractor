@@ -1,5 +1,5 @@
 # Watch Later Extractor
-[Tampermonkey](https://www.tampermonkey.net/) script to export videos from your YouTube Watch Later page to a JSON file
+[Tampermonkey](https://www.tampermonkey.net/) script to export videos from your YouTube Watch Later page to a JSON or CSV file
 
 ## Usage
 - Go to your [Watch Later](https://www.youtube.com/playlist?list=WL) and wait for the page to load
