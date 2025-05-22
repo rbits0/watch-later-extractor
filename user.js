@@ -18,8 +18,8 @@ function runScript() {
     let box = document.createElement("div");
     box.style = `
         color: white;
-        background-color: #555555;
-        border-radius: 2rem;
+        background-color: #272727;
+        border-radius: 1rem;
         width: 50rem;
         height: 20rem;
         display: flex;
@@ -28,6 +28,7 @@ function runScript() {
         justify-content: center;
         gap: 2rem;
         padding: 2rem;
+        box-shadow: 2px 2px 5px 0px #101010;
     `;
     
     let textElement = document.createElement("p");
@@ -43,6 +44,9 @@ function runScript() {
     videoIdInput.style = `
         font-size: 2rem;
         width: 80%;
+        border-radius: 0.5rem;
+        border: none;
+        box-shadow: 2px 2px 5px -1px #151515;
     `
     box.appendChild(videoIdInput);
 
@@ -60,7 +64,12 @@ function runScript() {
     button.textContent = "Start";
     button.style = `
         font-size: 2rem;
-        padding: 0.5rem;
+        padding: 0.5rem 2rem;
+        background-color: #424242;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        box-shadow: 2px 2px 5px -1px #151515;
     `
     box.appendChild(button);
 
